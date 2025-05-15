@@ -563,7 +563,19 @@ else:
                             
                             if uploader_upi:
                                 upi_link = generate_upi_link(uploader_upi, uploader_name, user_total)
-                                st.markdown(f"[Pay ₹{user_total:.2f} to {uploader_name}]({upi_link}) *(Open in UPI app)*")
+                                # Use HTML anchor tag for clickable link
+                                st.markdown(
+                                    f"""
+                                    <a href="{upi_link}" style="color: #1f77b4; text-decoration: none; font-weight: bold;">
+                                        Pay ₹{user_total:.2f} to {uploader_name}
+                                    </a> (Open in UPI app)
+                                    """,
+                                    unsafe_allow_html=True
+                                )
+                                # Display raw link for debugging
+                                st.write(f"Raw UPI Link (copy if not clickable): {upi_link}")
+                                # Fallback instruction
+                                st.info("If the link is not clickable, copy the raw link above and paste it into your browser or UPI app.")
                             else:
                                 st.warning(f"{uploader_name} has not set a UPI ID.")
                         else:
